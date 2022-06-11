@@ -1,0 +1,159 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Video API",
+    "description": "This is an API for searching, watching and uploading videos.",
+    "contact": {
+      "name": "Vasile Nebunu",
+      "email": "vasile.nebunu99@e-uvt.ro"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "video",
+      "description": "The main resource of this API"
+    },
+    {
+      "name": "user",
+      "description": "An user account will give access to uploading videos, adding comments or liking/disliking already uploaded videos"
+    }
+  ],
+  "paths": {
+    "/video": {
+      "post": {
+        "tags": [
+          "video"
+        ],
+        "summary": "Add/Upload a new video using an account",
+        "operationId": "addVideo",
+        "responses": {
+          "200": {
+            "description": "A new video is added to the current account"
+          },
+          "405": {
+            "description": "Invalid file"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a video",
+        "description": "This operation can be done only video user owner",
+        "operationId": "deleteVideo",
+        "responses": {
+          "200": {
+            "description": "Video removed"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update video information(title, description etc)",
+        "description": "This operation can be done only video user owner",
+        "operationId": "updateVideo",
+        "responses": {
+          "200": {
+            "description": "Video updated"
+          },
+          "405": {
+            "description": "Invalid input data"
+          }
+        }
+      }
+    },
+    "/video/findByTitle": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Search videos engine",
+        "description": "Operation to find videos by their titles using keywords",
+        "operationId": "findVideo",
+        "responses": {
+          "200": {
+            "description": "A list of matching videos"
+          },
+          "405": {
+            "description": "No video title matches keywords"
+          }
+        }
+      }
+    },
+    "/video/comment": {
+      "get": {
+        "summary": "Finds all comments of a video",
+        "responses": {
+          "200": {
+            "description": "Videos returned"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a comment to the current video",
+        "operationId": "addComment",
+        "responses": {
+          "200": {
+            "description": "Comment created"
+          },
+          "405": {
+            "description": "Invalid input string"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a comment.",
+        "description": "This operation can be done only by owner of the comment or the owner of the video where comment is located",
+        "operationId": "deleteComment",
+        "responses": {
+          "200": {
+            "description": "Comment removed"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Create a new user account",
+        "operationId": "createUser",
+        "responses": {
+          "200": {
+            "description": "User created successfuly"
+          },
+          "405": {
+            "description": "Mail address already used"
+          },
+          "406": {
+            "description": "Username already used"
+          },
+          "407": {
+            "description": "Invalid username"
+          },
+          "408": {
+            "description": "Invalid mail address"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete current account and all data(uploaded videos, comments, likes/dislike)",
+        "operationId": "deleteUser",
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          }
+        }
+      }
+    },
+    "/user/findByName": {
+      "get": {
+        "summary": "Find user searching by the username",
+        "responses": {
+          "200": {
+            "description": "Return a list of users which match keywords"
+          },
+          "405": {
+            "description": "No user found"
+          }
+        }
+      }
+    }
+  }
+}
